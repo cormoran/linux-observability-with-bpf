@@ -50,7 +50,7 @@ bpf.attach_perf_event(ev_type=PerfType.SOFTWARE,
 
 exiting = 0
 try:
-    sleep(300)
+    sleep(60)
 except KeyboardInterrupt:
     exiting = 1
     signal.signal(signal.SIGINT, signal_ignore)
@@ -74,3 +74,16 @@ for trace, acc in sorted(bpf['cache'].items(), key=lambda cache: cache[1].value)
     sys.stdout.write("%s %d\n" % (frame, acc.value))
     if exiting:
         exit()
+
+# $ cd ~/linux-observability-with-bpf/code/chapter-4/flamegraphs/
+
+# $ go run main.go
+
+# $ sudo python bcc_example.py $(pgrep -nx go) > profile.out
+
+
+# $ cd ~
+# $ git clone https://github.com/brendangregg/FlameGraph.git
+# $ cd ~/linux-observability-with-bpf/code/chapter-4/flamegraphs/
+# $ ~/FlameGraph/flamegraph.pl ~/linux-observability-with-bpf/code/chapter-4/flamegraphs/profile.out  > ~/linux-observability-with-bpf/code/chapter-4/flamegraphs/profile.svg
+# # (svg to png by vs-code extension)

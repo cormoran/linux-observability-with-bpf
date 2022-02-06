@@ -28,3 +28,9 @@ bpf = BPF(text = bpf_source)
 bpf.attach_uprobe(name = "./hello-bpf", sym = "main.main", fn_name = "trace_start_time")
 bpf.attach_uretprobe(name = "./hello-bpf", sym = "main.main", fn_name = "print_duration")
 bpf.trace_print()
+
+# $ cp ../uprobes/hello-bpf .
+# $ sudo python example.py
+#       hello-bpf-24454 [000] .... 1287240.546438: 0x00000001: Function call duration: 359314
+
+# $ ./hello-bpf
